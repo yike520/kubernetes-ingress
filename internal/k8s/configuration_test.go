@@ -21,13 +21,14 @@ func createTestConfiguration() *Configuration {
 	appProtectEnabled := false
 	internalRoutesEnabled := false
 	isTLSPassthroughEnabled := true
+	isWildcardTLSSecretEnabled := false
 	snippetsEnabled := true
 	return NewConfiguration(
 		lbc.HasCorrectIngressClass,
 		isPlus,
 		appProtectEnabled,
 		internalRoutesEnabled,
-		validation.NewVirtualServerValidator(isTLSPassthroughEnabled),
+		validation.NewVirtualServerValidator(isTLSPassthroughEnabled, isWildcardTLSSecretEnabled),
 		validation.NewGlobalConfigurationValidator(map[int]bool{
 			80:  true,
 			443: true,

@@ -2036,6 +2036,7 @@ func (vsc *virtualServerConfigurator) generateSSLConfig(owner runtime.Object, tl
 			}
 			return &ssl
 		}
+		// this case isn't allowed by validation (VirtualServerValidator)
 		return nil
 	}
 

@@ -605,7 +605,7 @@ func main() {
 	controllerNamespace := os.Getenv("POD_NAMESPACE")
 
 	transportServerValidator := cr_validation.NewTransportServerValidator(*enableTLSPassthrough, *enableSnippets, *nginxPlus)
-	virtualServerValidator := cr_validation.NewVirtualServerValidator(*nginxPlus)
+	virtualServerValidator := cr_validation.NewVirtualServerValidator(*nginxPlus, isWildcardEnabled)
 
 	lbcInput := k8s.NewLoadBalancerControllerInput{
 		KubeClient:                   kubeClient,

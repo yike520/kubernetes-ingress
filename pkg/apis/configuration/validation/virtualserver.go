@@ -15,13 +15,15 @@ import (
 
 // VirtualServerValidator validates a VirtualServer/VirtualServerRoute resource.
 type VirtualServerValidator struct {
-	isPlus bool
+	isPlus              bool
+	isWildcardTLSSecret bool
 }
 
 // NewVirtualServerValidator creates a new VirtualServerValidator.
-func NewVirtualServerValidator(isPlus bool) *VirtualServerValidator {
+func NewVirtualServerValidator(isPlus, isWildcardTLSSecret bool) *VirtualServerValidator {
 	return &VirtualServerValidator{
-		isPlus: isPlus,
+		isPlus:              isPlus,
+		isWildcardTLSSecret: isWildcardTLSSecret,
 	}
 }
 
@@ -36,7 +38,7 @@ func (vsv *VirtualServerValidator) validateVirtualServerSpec(spec *v1.VirtualSer
 	allErrs := field.ErrorList{}
 
 	allErrs = append(allErrs, validateHost(spec.Host, fieldPath.Child("host"))...)
-	allErrs = append(allErrs, validateTLS(spec.TLS, fieldPath.Child("tls"))...)
+	allErrs = append(allErrs, validateTLS(spec.TLS, fieldPath.Child("tls"), vsv.isWildcardTLSSecret)...)
 	allErrs = append(allErrs, validatePolicies(spec.Policies, fieldPath.Child("policies"), namespace)...)
 
 	upstreamErrs, upstreamNames := vsv.validateUpstreams(spec.Upstreams, fieldPath.Child("upstreams"))
@@ -99,12 +101,16 @@ func validatePolicies(policies []v1.PolicyReference, fieldPath *field.Path, name
 	return allErrs
 }
 
-func validateTLS(tls *v1.TLS, fieldPath *field.Path) field.ErrorList {
+func validateTLS(tls *v1.TLS, fieldPath *field.Path, isWildcardTLSSecret bool) field.ErrorList {
 	allErrs := field.ErrorList{}
 
 	if tls == nil {
 		// valid case - tls is not defined
 		return allErrs
+	}
+
+	if tls.Secret == "" && !isWildcardTLSSecret {
+		return append(allErrs, field.Required(fieldPath, "must be specified or the global wildcard TLS secret must be configured"))
 	}
 
 	allErrs = append(allErrs, validateSecretName(tls.Secret, fieldPath.Child("secret"))...)

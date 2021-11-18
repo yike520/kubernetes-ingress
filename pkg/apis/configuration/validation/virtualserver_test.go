@@ -204,77 +204,125 @@ func TestValidatePoliciesFails(t *testing.T) {
 }
 
 func TestValidateTLS(t *testing.T) {
-	validTLSes := []*v1.TLS{
-		nil,
+	tests := []struct {
+		tls                 *v1.TLS
+		isWildcardTLSSecret bool
+		msg                 string
+	}{
 		{
-			Secret: "",
-		},
-		{
-			Secret: "my-secret",
-		},
-		{
-			Secret:   "my-secret",
-			Redirect: &v1.TLSRedirect{},
-		},
-		{
-			Secret: "my-secret",
-			Redirect: &v1.TLSRedirect{
-				Enable: true,
+			tls: &v1.TLS{
+				Secret: "",
 			},
+			isWildcardTLSSecret: true,
+			msg:                 "secret is empty with wildcard tls secret enabled",
 		},
 		{
-			Secret: "my-secret",
-			Redirect: &v1.TLSRedirect{
-				Enable:  true,
-				Code:    createPointerFromInt(302),
-				BasedOn: "scheme",
+			tls: &v1.TLS{
+				Secret: "my-secret",
 			},
+			isWildcardTLSSecret: false,
+			msg:                 "valid secret name with wildcard tsl secret disabled",
 		},
 		{
-			Secret: "my-secret",
-			Redirect: &v1.TLSRedirect{
-				Enable: true,
-				Code:   createPointerFromInt(307),
+			tls: &v1.TLS{
+				Secret: "my-secret",
 			},
+			isWildcardTLSSecret: true,
+			msg:                 "valid secret name with wildcard tls secret enabled",
+		},
+		// for the remaining tests, we will use isWildcardTLSSecret=false, as it doesn't affect the result
+		{
+			tls: nil,
+			msg: "tls field is empty",
+		},
+		{
+			tls: &v1.TLS{
+				Secret:   "my-secret",
+				Redirect: &v1.TLSRedirect{},
+			},
+			msg: "valid empty redirect",
+		},
+		{
+			tls: &v1.TLS{
+				Secret: "my-secret",
+				Redirect: &v1.TLSRedirect{
+					Enable: true,
+				},
+			},
+			msg: "valid enabled redirect",
+		},
+		{
+			tls: &v1.TLS{
+				Secret: "my-secret",
+				Redirect: &v1.TLSRedirect{
+					Enable:  true,
+					Code:    createPointerFromInt(302),
+					BasedOn: "scheme",
+				},
+			},
+			msg: "valid fully configured redirect",
 		},
 	}
 
-	for _, tls := range validTLSes {
-		allErrs := validateTLS(tls, field.NewPath("tls"))
+	for _, test := range tests {
+		allErrs := validateTLS(test.tls, field.NewPath("tls"), test.isWildcardTLSSecret)
 		if len(allErrs) > 0 {
-			t.Errorf("validateTLS() returned errors %v for valid input %v", allErrs, tls)
+			t.Errorf("validateTLS() returned errors %v for valid input %v", allErrs, test)
 		}
 	}
+}
 
-	invalidTLSes := []*v1.TLS{
+func TestValidateTLSFails(t *testing.T) {
+	tests := []struct {
+		tls *v1.TLS
+		msg string
+	}{
 		{
-			Secret: "-",
-		},
-		{
-			Secret: "a/b",
-		},
-		{
-			Secret: "my-secret",
-			Redirect: &v1.TLSRedirect{
-				Enable:  true,
-				Code:    createPointerFromInt(305),
-				BasedOn: "scheme",
+			tls: &v1.TLS{
+				Secret: "",
 			},
+			msg: "missing secret",
 		},
 		{
-			Secret: "my-secret",
-			Redirect: &v1.TLSRedirect{
-				Enable:  true,
-				Code:    createPointerFromInt(301),
-				BasedOn: "invalidScheme",
+			tls: &v1.TLS{
+				Secret: "-",
+			},
+			msg: "invalid secret name",
+		},
+		{
+			tls: &v1.TLS{
+				Secret: "a/b",
+			},
+			msg: "invalid secret name - namespace is not allowed",
+		},
+		{
+			tls: &v1.TLS{
+				Secret: "my-secret",
+				Redirect: &v1.TLSRedirect{
+					Enable:  true,
+					Code:    createPointerFromInt(305),
+					BasedOn: "scheme",
+				},
+			},
+			msg: "invalid redirect code",
+		},
+		{
+			tls: &v1.TLS{
+				Secret: "my-secret",
+				Redirect: &v1.TLSRedirect{
+					Enable:  true,
+					Code:    createPointerFromInt(301),
+					BasedOn: "invalidScheme",
+				},
 			},
 		},
 	}
 
-	for _, tls := range invalidTLSes {
-		allErrs := validateTLS(tls, field.NewPath("tls"))
+	for _, test := range tests {
+		isWildcardTLSSecret := false
+		allErrs := validateTLS(test.tls, field.NewPath("tls"), isWildcardTLSSecret)
 		if len(allErrs) == 0 {
-			t.Errorf("validateTLS() returned no errors for invalid input %v", tls)
+			t.Errorf("validateTLS() returned no errors for invalid input %v", test)
 		}
 	}
 }
