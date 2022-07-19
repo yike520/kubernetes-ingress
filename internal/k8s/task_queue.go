@@ -6,7 +6,7 @@ import (
 
 	"github.com/nginxinc/kubernetes-ingress/pkg/apis/dos/v1beta1"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 	"github.com/nginxinc/kubernetes-ingress/internal/k8s/appprotect"
 	"github.com/nginxinc/kubernetes-ingress/internal/k8s/appprotectdos"
 	conf_v1 "github.com/nginxinc/kubernetes-ingress/pkg/apis/configuration/v1"

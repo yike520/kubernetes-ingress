@@ -7,7 +7,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

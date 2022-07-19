@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"path"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 )
 
 func shellOut(cmd string) (err error) {

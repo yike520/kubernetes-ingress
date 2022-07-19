@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 	"github.com/nginxinc/nginx-plus-go-client/client"
 )
 

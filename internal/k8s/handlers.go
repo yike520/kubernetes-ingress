@@ -7,7 +7,7 @@ import (
 
 	"github.com/nginxinc/kubernetes-ingress/pkg/apis/dos/v1beta1"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 	"github.com/nginxinc/kubernetes-ingress/internal/k8s/secrets"
 	v1 "k8s.io/api/core/v1"
 	networking "k8s.io/api/networking/v1"

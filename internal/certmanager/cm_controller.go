@@ -24,7 +24,7 @@ import (
 	cm_clientset "github.com/cert-manager/cert-manager/pkg/client/clientset/versioned"
 	cm_informers "github.com/cert-manager/cert-manager/pkg/client/informers/externalversions"
 	controllerpkg "github.com/cert-manager/cert-manager/pkg/controller"
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/runtime"
 	kubeinformers "k8s.io/client-go/informers"

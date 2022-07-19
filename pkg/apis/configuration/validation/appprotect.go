@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 )
 

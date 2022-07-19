@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 )
 
 // JWTKeyAnnotation is the annotation where the Secret with a JWK is specified.

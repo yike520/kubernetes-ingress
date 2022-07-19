@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 	"github.com/google/go-cmp/cmp"
 	vsapi "github.com/nginxinc/kubernetes-ingress/pkg/apis/configuration/v1"
 	extdnsapi "github.com/nginxinc/kubernetes-ingress/pkg/apis/externaldns/v1"

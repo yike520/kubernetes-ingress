@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 
 	"github.com/nginxinc/kubernetes-ingress/internal/metrics/collectors"
 )

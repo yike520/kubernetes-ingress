@@ -12,7 +12,7 @@ import (
 
 	"github.com/nginxinc/kubernetes-ingress/internal/metrics/collectors"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 	"github.com/nginxinc/nginx-plus-go-client/client"
 )
 

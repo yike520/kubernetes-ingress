@@ -3,7 +3,7 @@ package configs
 import (
 	"strings"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 	v1 "k8s.io/api/core/v1"
 
 	"github.com/nginxinc/kubernetes-ingress/internal/configs/version1"

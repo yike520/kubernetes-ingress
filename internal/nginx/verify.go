@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/golang/glog"
+	"github.com/nginxinc/glog"
 )
 
 // verifyClient is a client for verifying the config version.
