@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nginxinc/glog"
 	"github.com/google/go-cmp/cmp"
+	"github.com/nginxinc/glog"
 	vsapi "github.com/nginxinc/kubernetes-ingress/pkg/apis/configuration/v1"
 	extdnsapi "github.com/nginxinc/kubernetes-ingress/pkg/apis/externaldns/v1"
 	clientset "github.com/nginxinc/kubernetes-ingress/pkg/client/clientset/versioned"
