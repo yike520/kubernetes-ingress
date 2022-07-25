@@ -484,12 +484,6 @@ func validateIngressAnnotations(
 ) field.ErrorList {
 	allErrs := field.ErrorList{}
 
-	for key := range annotations {
-		if !stringInSlice(key, annotationNames) {
-			allErrs = append(allErrs, field.Invalid(fieldPath, key, fmt.Sprintf("invalid annotation provided")))
-		}
-	}
-
 	for _, name := range annotationNames {
 		if value, exists := annotations[name]; exists {
 			context := &annotationValidationContext{
