@@ -51,7 +51,7 @@ This document describes how to install the NGINX Ingress Controller in your Kube
 
 ## 2. Create Common Resources
 
-{{< note >}} If you want to use your own certificate and key for TLS tor the NGINX Ingress controller `default_server`, you are free to do so. The format should be: `namespace/name_of_secret`{{< /note >}}   
+{{< note >}} If you want to use your own certificate and key for TLS for the NGINX Ingress Controller `default_server`, you are free to do so. The format should be: `namespace/name_of_secret`{{< /note >}}   
 
 This is a Kubernetes TLS secret that contains your certificate and key.
 Providing a TLS secret for the `default_server` is not required. If you don't specify a secret to use, NGINX Ingress Controller automatically enables `ssl_reject_handshake`. You can find out more about  [`ssl_reject_handshake`](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_reject_handshake) in the NGINX Open Source directives documentation.   
