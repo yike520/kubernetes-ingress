@@ -57,13 +57,6 @@ Expand serviceMonitor name.
 {{- end -}}
 
 {{/*
-Expand default TLS name.
-*/}}
-{{- define "nginx-ingress.defaultTLSName" -}}
-{{- printf "%s-%s" (include "nginx-ingress.name" .) "default-server-tls" -}}
-{{- end -}}
-
-{{/*
 Expand wildcard TLS name.
 */}}
 {{- define "nginx-ingress.wildcardTLSName" -}}

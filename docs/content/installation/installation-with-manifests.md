@@ -51,13 +51,10 @@ This document describes how to install the NGINX Ingress Controller in your Kube
 
 ## 2. Create Common Resources
 
-In this section, we create resources common for most of the Ingress Controller installations:
-1. Create a secret with a TLS certificate and a key for the default server in NGINX:
-    ```
-    $ kubectl apply -f common/default-server-secret.yaml
-    ```
+**Note**: If you want to use your own certificate and key for TLS tor the NGINX Ingress controller `default_server`, you are free to do so. The format should be: `namespace/name_of_secret`   
+This is a kubernetes TLS secret that will contain your certificate and key.
+This is not required however. If you decide not to provide a TLS secret for the `default_server`, NGINX Ingress controller will automatically enable `ssl_reject_handshake`. Read more on [ssl_reject_handshake](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_reject_handshake)   
 
-    **Note**: The default server returns the Not Found page with the 404 status code for all requests for domains for which there are no Ingress rules defined. For testing purposes we include a self-signed certificate and key that we generated. However, we recommend that you use your own certificate and key.
 
 1. Create a config map for customizing NGINX configuration:
     ```
