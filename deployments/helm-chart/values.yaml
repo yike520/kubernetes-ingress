@@ -69,7 +69,6 @@ controller:
   defaultTLS:
     ## The secret with a TLS certificate and key for the default HTTPS server.
     ## The value must follow the following format: `<namespace>/<name>`.
-    ## Used as an alternative to specifying a certificate and key using `controller.defaultTLS.cert` and `controller.defaultTLS.key` parameters.
     ## Format: <namespace>/<secret_name>
     secret:
 

@@ -68,10 +68,8 @@ var (
 
 	defaultServerSecret = flag.String("default-server-tls-secret", "",
 		`A Secret with a TLS certificate and key for TLS termination of the default server. Format: <namespace>/<name>.
-	If not set, than the certificate and key in the file "/etc/nginx/secrets/default" are used.
-	If "/etc/nginx/secrets/default" doesn't exist, the Ingress Controller will configure NGINX to reject TLS connections to the default server.
-	If a secret is set, but the Ingress Controller is not able to fetch it from Kubernetes API or it is not set and the Ingress Controller
-	fails to read the file "/etc/nginx/secrets/default", the Ingress Controller will fail to start.`)
+	If not set, "ssl_reject_handshake" will be used.
+	If a secret is set, but the Ingress Controller is not able to fetch it from Kubernetes API, the Ingress Controller will fail to start.`)
 
 	versionFlag = flag.Bool("version", false, "Print the version, git-commit hash and build date and exit")
 
