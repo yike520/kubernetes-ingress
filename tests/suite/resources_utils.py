@@ -1440,25 +1440,25 @@ def ensure_response_from_backend(req_url, host, additional_headers=None, check40
     if additional_headers:
         headers.update(additional_headers)
 
-    if check404:
-        for _ in range(60):
-            resp = requests.get(req_url, headers=headers, verify=False)
-            if resp.status_code != 502 and resp.status_code != 504 and resp.status_code != 404:
-                print(
-                    f"After {_} retries at 1 second interval, got {resp.status_code} response. Continue with tests..."
-                )
-                return
-            time.sleep(1)
-        pytest.fail(f"Keep getting {resp.status_code} from {req_url} after 60 seconds. Exiting...")
+    resp = requests.get(req_url, headers=headers, verify=False)
+    retry = 0
+    rules = []
 
+    while all(rules) and retry <= 60:
+        time.sleep(1)
+        retry += 1
+        resp = requests.get(req_url, headers=headers, verify=False)
+        if check404:
+            rules = [resp.status_code == 502, resp.status_code == 504, resp.status_code == 404]
+        else:
+            rules = [resp.status_code == 502, resp.status_code == 504]
+        print(f"After {retry} retries at 1 second interval, got {resp.status_code} response. Continue with tests...")
+    if retry > 60:
+        pytest.fail(f"Getting {resp.status_code} from {req_url} after 60 retries with 1 second interval. Exiting...")
+    elif resp.status_code == 200:
+        return
     else:
-        for _ in range(30):
-            resp = requests.get(req_url, headers=headers, verify=False)
-            if resp.status_code != 502 and resp.status_code != 504:
-                print(f"After {_} retries at 1 second interval, got non 502|504 response. Continue with tests...")
-                return
-            time.sleep(1)
-        pytest.fail(f"Keep getting 502|504 from {req_url} after 60 seconds. Exiting...")
+        pytest.fail("Unexpected status code")
 
 
 def get_service_endpoint(kube_apis, service_name, namespace) -> str:
