@@ -8,10 +8,10 @@ require (
 	github.com/cert-manager/cert-manager v1.9.1
 	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/golang/glog v1.0.0
-	github.com/google/go-cmp v0.5.8
+	github.com/google/go-cmp v0.5.9
 	github.com/kr/pretty v0.3.0
 	github.com/nginxinc/nginx-plus-go-client v0.10.0
-	github.com/nginxinc/nginx-prometheus-exporter v0.10.0
+	github.com/nginxinc/nginx-prometheus-exporter v0.11.0
 	github.com/prometheus/client_golang v1.13.0
 	github.com/spiffe/go-spiffe/v2 v2.1.1
 	github.com/stretchr/testify v1.8.0
