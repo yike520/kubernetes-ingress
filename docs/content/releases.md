@@ -32,8 +32,6 @@ FEATURES:
 IMPROVEMENTS:
 
 * [2912](https://github.com/nginxinc/kubernetes-ingress/pull/2912) NIC + NAP DoS images.
-* 
-* 
 
 FIXES:
 
@@ -41,6 +39,7 @@ FIXES:
 * [2908](https://github.com/nginxinc/kubernetes-ingress/pull/2908) segregate IC and custom resources fixtures.
 * [2983](https://github.com/nginxinc/kubernetes-ingress/pull/2983) docs: Fix links in the NAP config doc in main.
 * [2971](https://github.com/nginxinc/kubernetes-ingress/pull/2971) fix: Correct error message on missing path in path validation.
+* [3095](https://github.com/nginxinc/kubernetes-ingress/pull/3095) do not create configmap is customConfigMap is used.
 
 
 UPGRADE:
